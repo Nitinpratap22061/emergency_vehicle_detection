@@ -63,7 +63,7 @@ if uploaded_file is not None:
         for i, text in enumerate(predicted_texts):
             box = boxes[i]  # Assuming boxes are [x, y, w, h]
             x, y, w, h = box
-            y += 45  # Shift the bounding box further below for more visibility
+            y += 60  # Shift the bounding box further below for more visibility
 
             # Set label color and font size based on object type
             color = (0, 0, 255) if "emergency" in text.lower() else (255, 0, 0)  # Red for emergency, blue otherwise
