@@ -68,7 +68,7 @@ if uploaded_file is not None:
             # Set label color and font size based on object type
             color = (0, 0, 255) if "emergency" in text.lower() else (255, 0, 0)  # Red for emergency, blue otherwise
             font_size = 0.9
-            font_thickness = 2.5
+            font_thickness = 2
 
             # Draw bounding box
             cv2.rectangle(img_pred_rgb, (x, y), (x + w, y + h), color, 2)
