@@ -36,7 +36,7 @@ if uploaded_file is not None:
     # Initialize frame counter and skip frame rate for speed
     frame_count = 0
     fps = video_file.get(cv2.CAP_PROP_FPS)
-    skip_frames = 5  # Process every 5th frame to speed up
+    skip_frames = 6  # Process every 5th frame to speed up
 
     # Initialize variable to track if emergency vehicle detected
     emergency_detected = False
@@ -63,7 +63,7 @@ if uploaded_file is not None:
         for i, text in enumerate(predicted_texts):
             box = boxes[i]  # Assuming boxes are [x, y, w, h]
             x, y, w, h = box
-            y += 55  # Shift the bounding box further below for more visibility
+            y += 50  # Shift the bounding box further below for more visibility
 
             # Set label color and font size based on object type
             color = (0, 0, 255) if "emergency" in text.lower() else (255, 0, 0)  # Red for emergency, blue otherwise
