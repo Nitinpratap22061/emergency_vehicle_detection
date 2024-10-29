@@ -36,7 +36,11 @@ if uploaded_file is not None:
     # Initialize frame counter and skip frame rate for speed
     frame_count = 0
     fps = video_file.get(cv2.CAP_PROP_FPS)
-    skip_frames = 5  # Process every 3rd frame to speed up
+    skip_frames = 4  # Process every 3rd frame to speed up
+
+    # Initialize variable to track if emergency vehicle detected
+    emergency_detected = False
+    emergency_timestamp = ""
 
     while True:
         # Skip frames to process faster
@@ -60,6 +64,7 @@ if uploaded_file is not None:
             box = boxes[i]  # Assuming boxes are [x, y, w, h]
             x, y, w, h = box
             y += 35  # Shift the bounding box further below for more visibility
+
             # Set label color and font size based on object type
             color = (0, 0, 255) if "emergency" in text.lower() else (255, 0, 0)  # Red for emergency, blue otherwise
             font_size = 0.7
@@ -74,6 +79,11 @@ if uploaded_file is not None:
 
             # Put text label below the bounding box
             cv2.putText(img_pred_rgb, text, (x, y + h + 20), cv2.FONT_HERSHEY_SIMPLEX, font_size, (255, 255, 255), font_thickness)
+
+            # Check for emergency vehicle detection
+            if "emergency" in text.lower():
+                emergency_detected = True
+                emergency_timestamp = str(timedelta(seconds=int(frame_count / fps)))
 
         # Add timestamp with background for visibility
         timestamp = str(timedelta(seconds=int(frame_count / fps)))
@@ -95,6 +105,10 @@ if uploaded_file is not None:
         else:
             st.sidebar.write("No objects detected.")
         st.sidebar.write(f"Current Time: {timestamp}")
+
+        # Show flash message for emergency vehicle detection
+        if emergency_detected:
+            st.success(f"Emergency vehicle detected at {emergency_timestamp}!")
 
         # Update frame counter
         frame_count += skip_frames
