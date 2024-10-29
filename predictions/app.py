@@ -36,7 +36,7 @@ if uploaded_file is not None:
     # Initialize frame counter and skip frame rate for speed
     frame_count = 0
     fps = video_file.get(cv2.CAP_PROP_FPS)
-    skip_frames = 6  # Process every 3rd frame to speed up
+    skip_frames = 5  # Process every 3rd frame to speed up
 
     # Initialize variable to track if emergency vehicle detected
     emergency_detected = False
