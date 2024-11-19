@@ -4,9 +4,20 @@ import numpy as np
 from datetime import timedelta
 from helper import YOLO_Pred
 import time
+import os
 
-# Initialize YOLO_Pred with your model and YAML configuration
-yolo = YOLO_Pred('predictions/hell/weights/best.onnx', 'data.yaml')
+# Define the correct path for weights and YAML file
+model_path = 'predictions/hell/weights/best.onnx'  # Ensure this is correct in your deployed environment
+yaml_path = 'data.yaml'  # Ensure this is correct in your deployed environment
+
+# Check if paths exist before proceeding
+if not os.path.exists(model_path):
+    st.error(f"Model file not found at {model_path}")
+if not os.path.exists(yaml_path):
+    st.error(f"YAML file not found at {yaml_path}")
+
+# Initialize YOLO_Pred with the correct model and YAML configuration
+yolo = YOLO_Pred(model_path, yaml_path)
 
 # Streamlit app configuration
 st.set_page_config(page_title="YOLO Object Detection", layout="wide")
@@ -114,6 +125,9 @@ with tab1:
 
         # Release video capture
         video_file.release()
+
+        # Clean up the temporary video file
+        os.remove(temp_video_path)
 
 # Image Detection
 with tab2:
